@@ -1,0 +1,40 @@
+{
+  "name": "audiophile",
+  "version": "1.0.0",
+  "description": "A simple audio api that serves a list of songs and their meta-data",
+  "main": "app.js",
+  "scripts": {
+    "prestart": "node util/parseMeta.js",
+    "start": "nodemon app.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Kevin Siende",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.0",
+    "mocha": "^6.1.4",
+    "should": "^13.2.3",
+    "sinon": "^7.3.2"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2000",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 4000
+    }
+  }
+}
