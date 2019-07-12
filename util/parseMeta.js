@@ -56,4 +56,4 @@ async function ParseFiles() {
 ParseFiles().catch(console.error);
 
 // export module so it can be called more dynamically and used in Router logic
-module.exports = ParseFiles();
+module.exports = ParseFiles;
