@@ -13,12 +13,12 @@
   "author": "Kevin Siende",
   "license": "ISC",
   "dependencies": {
+    "chalk": "^2.4.2",
     "express": "^4.17.1",
     "nodemon": "^1.19.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "chalk": "^2.4.2",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",

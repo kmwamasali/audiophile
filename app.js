@@ -9,28 +9,14 @@ const app = express();
 
 // Set port environment and create a Router
 const port = process.env.PORT || 3000;
-// TODO: Export Router logic to Router module function
+// TODO: Export Router logic to Router module & controller so it's more dynamic
+// Also a good practice for cleaner code
 const songRouter = express.Router();
 
 // Define relative storage path locations for meta file and audio files
 const songsData = path.join(__dirname, 'static', 'songs-meta.json');
 
-// TODO: Improve & Extract File parsing functions to Helper factory Function
-// Simple Search Helper Function To Return a song
-// TODO: Complete search function to dynamically evaluate key
-const findSong = (file) => {
-  fs.readFile(file, (err, data) => {
-    if (err) return err;
-    const obj = JSON.parse(data);
-    obj.forEach((item) => {
-      if (item.id === 'd8132ce1-a413-11e9-9dba-470168a6f064') {
-        return item;
-      }
-    });
-  });
-};
-
-// Route to fetch all songs & meta from flatfile and return a JSON list Object
+// Route to fetch all songs & meta from flatfile and return an Array of song objects
 // TODO: Complete Verbs for /songs route & Add query param to handle search
 songRouter.route('/songs')
   .get((req, res) => {
@@ -43,16 +29,23 @@ songRouter.route('/songs')
     });
   });
 
-// Route to fetch a single song from :songTitle param and return a single JSON Object
-// TODO: Complete Verbs for /songs/:songTitle route to possibly
-songRouter.route('/songs/:songTitle')
-  .get((req, res) => { findSong(songsData); });
-// Add vanity extension to router logic
-app.use('/api', songRouter);
+// Route to fetch a single song from :songID param and return a single JSON Object
+// TODO: Complete Verbs for /songs/:songID route
+songRouter.route('/songs/:songID')
+  .get((req, res) => {
+    fs.readFile(songsData, (err, data) => {
+      if (err) return err;
+      const track = JSON.parse(data).find(song => song.id === req.params.songID.toString());
+      if (track) return res.send(track);
+      return res.status(404).send('Did not find that song');
+    });
+  });
+// Vanity extension to router path
+app.use('/v1', songRouter);
 
 // base url request
 app.get('/', (req, res) => {
-  res.send('Welcome to Audiophile Songs Api');
+  res.send('Welcome to Audiophile Songs Api navigate to /v1/songs to access list');
 });
 
 // set port listener for the express app

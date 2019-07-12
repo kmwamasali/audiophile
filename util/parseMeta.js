@@ -4,7 +4,7 @@ const path = require('path');
 const chalk = require('chalk');
 const uuid = require('uuid/v1');
 
-// Pure Function to accepts 2 params directory Path and Data
+// Function accepts 2 params directory Path and Data
 // Then write the recieved data to the assigned directory
 // TODO: Improve & Extract into helper util function
 function writeData(filePath, data) {
@@ -16,33 +16,33 @@ function writeData(filePath, data) {
 }
 
 // Setup async function to parse the audio files
-// TODO: Improve folder search function to perform recursive for extra folders
+// TODO: Create folder search function to perform recursive search for extra folders
 // TODO: Perform validation to check if file is audio
-// TODO: Complete & Convert Parse Function to factory module
+// TODO: Make ParseFiles Function more robust
 async function ParseFiles() {
   // Setup Function Variables
-  // create an array to hold the audio meta data
+  // create an array to hold the audio meta data and export data as array of objects
   const songsArray = [];
   // define relative directory paths to audio files & song metadata
-  // TODO: Improve directory look up
-  const dirname = path.join(__dirname, '..', 'static', 'audio');
+  // TODO: Create a better solution for directory look up
+  const audioDir = path.join(__dirname, '..', 'static', 'audio');
   const metaPath = path.join(__dirname, '..', 'static', 'songs-meta.json');
   // wrap Synchronous functions in try/catch to encapsulate error bubbling
   try {
     // Run sync function to get array of files
-    const files = fs.readdirSync(dirname);
+    const files = fs.readdirSync(audioDir);
     // Iterate through the file list to extract meta
     files.forEach((file) => {
-      const filePath = path.join(dirname, file);
-      // set up object to define a Song and create meta data
-      // TODO: Define a better song model and create middleware function to extract audio metadata
+      const filePath = path.join(audioDir, file);
+      // set up Model object to define a Song and create metaData
+      // TODO: Define a better song model and create middleware function to extract audio metaData
       // ( Length, Artist, Album, Bitrate, Year, Size, etc );
       const song = {
         id: uuid(),
         url: filePath,
         title: file,
       };
-      // insert generate Song model into array list
+      // insert generated Song Object into array list
       songsArray.push(song);
     });
   } finally {
@@ -54,3 +54,6 @@ async function ParseFiles() {
 // Invoke the Parse function and catch bubbled errors
 // eslint-disable-next-line no-console
 ParseFiles().catch(console.error);
+
+// export module so it can be called more dynamically and used in Router logic
+module.exports = ParseFiles();
