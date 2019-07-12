@@ -18,6 +18,7 @@ Run "npm start"
 ### TODOS 
 
 ```
+Create ReadFile middleware function to avoid repitition
 Export Router logic to module & controller so it's more dynamic
 Complete Verbs for /songs route & Add query param to handle search
 Complete Verbs for /songs/:songID route

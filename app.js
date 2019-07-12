@@ -18,6 +18,7 @@ const songsData = path.join(__dirname, 'static', 'songs-meta.json');
 
 // Route to fetch all songs & meta from flatfile and return an Array of song objects
 // TODO: Complete Verbs for /songs route & Add query param to handle search
+// TODO: Create readFile middleware function to avoid repitition
 songRouter.route('/songs')
   .get((req, res) => {
     fs.readFile(songsData, (err, data) => {
